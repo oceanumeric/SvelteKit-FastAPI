@@ -1,6 +1,1 @@
-<script>
-	import SideBar from "$lib/components/sideBar.svelte";
-
-</script>
-
-<SideBar />
+<h1>This is the base page !</h1>
