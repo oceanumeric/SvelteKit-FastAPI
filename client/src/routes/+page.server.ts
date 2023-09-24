@@ -7,6 +7,13 @@ export const load: PageServerLoad = async ({ url }) => {
     let students = STUDENTS;
     // server side
     // console.log('students', students);
+    let search:string | null = url.searchParams.get('search');
+
+    if (search) {
+		search = search.toLowerCase();
+		students = students.filter((s) => s.name.toLowerCase().includes(search));
+	}
+
     return {students}
 }
 
