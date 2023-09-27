@@ -3,7 +3,8 @@
 	import { onMount } from 'svelte';
 	import { io } from 'socket.io-client';
 
-	let messages = [];
+    let message: string = '';
+	let messages: string[] = [];
 
     onMount(() => {
         console.log('DOM fully loaded and parsed');
@@ -13,6 +14,19 @@
         // open the connection
         socket.addEventListener('open', function (event) {
             socket.send('Hello Server!');
+            // Send message on form submission
+            const form = document.querySelector('form')!;
+            // add event listener
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const input = document.querySelector('#message') as HTMLInputElement;
+                const text = input.value;
+                console.log('text', text);
+                socket.send(text);
+                input.value = '';
+                // append message to list
+                messages = [...messages, text];
+            });
         });
     });
 </script>
@@ -21,7 +35,7 @@
 	<div class="my-10">
 		<h1>WebSockets Echo</h1>
 		<form>
-			<input type="text" id="message" placeholder="your message" />
+			<input type="text" id="message" bind:value={message} placeholder="your message" />
 			<button type="submit">Send</button>
 		</form>
 	</div>
