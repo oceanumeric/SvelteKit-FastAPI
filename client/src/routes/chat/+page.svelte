@@ -4,7 +4,7 @@
 	import { io } from 'socket.io-client';
 
     let message: string = '';
-	let messages: string[] = [];
+	let clientMessages: string[] = [];
 
     onMount(() => {
         console.log('DOM fully loaded and parsed');
@@ -25,7 +25,7 @@
                 socket.send(text);
                 input.value = '';
                 // append message to list
-                messages = [...messages, text];
+                clientMessages = [...clientMessages, text];
             });
         });
     });
